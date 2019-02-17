@@ -31,7 +31,7 @@
                 <ComboBoxItem>EDShipyard</ComboBoxItem>
             </ComboBox>
         </StackPanel>
-        <DataGrid Margin="0,5" AutoGenerateColumns="False" x:Name="shipData" CanUserAddRows="false" CanUserDeleteRows="False" TargetUpdated="shipsUpdated">
+        <DataGrid Margin="0,5" AutoGenerateColumns="False" x:Name="shipData" CanUserAddRows="false" CanUserDeleteRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static resx:ShipMonitor.header_name}" IsReadOnly="True" Binding="{Binding Path=name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static resx:ShipMonitor.header_model}" IsReadOnly="True" Binding="{Binding Path=model}"></DataGridTextColumn>
@@ -62,11 +62,11 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
                 <DataGridComboBoxColumn Header="{x:Static resx:ShipMonitor.header_role}" SelectedItemBinding="{Binding Path=Role, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ItemsSource="{Binding Source={x:Static eddi:Role.Sorted}}">
-                    <DataGridComboBoxColumn.EditingElementStyle>
-                        <Style TargetType="{x:Type ComboBox}">
-                            <EventSetter Event="SelectionChanged" Handler="shipsUpdated" />
-                        </Style>
-                    </DataGridComboBoxColumn.EditingElementStyle>
+                <DataGridComboBoxColumn.EditingElementStyle>
+                    <Style TargetType="{x:Type ComboBox}">
+                        <EventSetter Event="SelectionChanged" Handler="shipsUpdated" />
+                    </Style>
+                </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
                 <DataGridTextColumn Header="{x:Static resx:ShipMonitor.header_spoken_name}" Width="*">
                     <DataGridTextColumn.Binding>

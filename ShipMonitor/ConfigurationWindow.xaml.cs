@@ -31,6 +31,9 @@ namespace EddiShipMonitor
             string exporttarget = eddiConfiguration.exporttarget;
             Logging.Debug("Export target from configuration: " + exporttarget);
             exportComboBox.Text = exporttarget ?? "Coriolis";
+
+            // Set up an event handler for user changes to phonetic names
+            shipData.CellEditEnding += shipsUpdated;
         }
 
         private void onExportTargetChanged(object sender, SelectionChangedEventArgs e)
@@ -108,16 +111,22 @@ namespace EddiShipMonitor
             }
         }
 
-        private void shipsUpdated(object sender, DataTransferEventArgs e)
+        private void shipsUpdated(object sender, DataGridCellEditEndingEventArgs e)
         {
-            // Update the ship monitor's information
-            shipMonitor()?.Save();
+            if (e.EditAction == DataGridEditAction.Commit && e.EditingElement.IsFocused)
+            {
+                // Update the ship monitor's 'Phonetic name' information
+                shipMonitor()?.Save();
+            }
         }
 
         private void shipsUpdated(object sender, SelectionChangedEventArgs e)
         {
-            // Update the ship monitor's information
-            shipMonitor()?.Save();
+            if (e.RemovedItems.Count > 0)
+            {
+                // Update the ship monitor's 'Role' information
+                shipMonitor()?.Save();
+            }
         }
     }
 
